@@ -7,6 +7,7 @@ package com.mycompany.adaentrega1;
 import static java.lang.StrictMath.random;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Random;
 import java.io.FileWriter;
 import java.io.IOException;
     import java.io.FileWriter;
@@ -20,9 +21,10 @@ public class AdaEntrega1 {
     public static void main(String[] args) {
         int contador;
         int v[];
+        Random random = new Random();
         for(contador=0; 10>contador;contador++){
             v = new int[ (contador+1) * 10000];
-            aleatorio(v,10000 * (contador +1));
+            aleatorio(v,10000 * (contador +1),random);
         }
         
         
@@ -112,7 +114,7 @@ public class AdaEntrega1 {
         return m;
     }
 
-    static void aleatorio(int v[], int tam) {
+    static void aleatorio(int v[], int tam,Random random) {
         int i;
         for (i = 0; i < tam; i++) {
             v[i] = i;
