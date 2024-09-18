@@ -3,15 +3,15 @@
  */
 package com.mycompany.adaentrega1;
 
-
 import static java.lang.StrictMath.random;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Random;
 import java.io.FileWriter;
 import java.io.IOException;
-    import java.io.FileWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+
 /**
  *
  * @author roger
@@ -22,16 +22,54 @@ public class AdaEntrega1 {
         int contador;
         int v[];
         Random random = new Random();
-        for(contador=0; 10>contador;contador++){
-            v = new int[ (contador+1) * 10000];
-            aleatorio(v,10000 * (contador +1),random);
+        int asignaciones1[] = new int[10];
+        int asignaciones2[] = new int[10];
+        int asignaciones3[] = new int[10];
+
+        int comparaciones1[] = new int[10];
+        int comparaciones2[] = new int[10];
+        int comparaciones3[] = new int[10];
+
+        long tiempo1[] = new long[10];
+        long tiempo2[] = new long[10];
+        long tiempo3[] = new long[10];
+        for (contador = 0; 10 > contador; contador++) {
+            v = new int[(contador + 1) * 10000];
+            int v1[], v2[], v3[], asignaciones=0, comparaciones=0;
+            v1 = v.clone();
+            v2 = v.clone();
+            v3 = v.clone();
+
+            aleatorio(v, 10000 * (contador + 1), random);
+            
+            //primera funcion 
+            Instant start = Instant.now();
+            ordena1(v1, 10000 * (contador + 1), comparaciones, asignaciones);
+            Instant finish = Instant.now();
+            asignaciones1[contador]=asignaciones;
+            comparaciones1[contador]=comparaciones;
+            tiempo1[contador] = Duration.between(start, finish).toNanos();
+            //------------------------
+            
+            //segunda funcion ---
+            
+            
+            //---
+            
+            // tercera funcion ---
+            
+            //------
+            
+            
+            
         }
         
-        
-        
+        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1.csv");
+        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena2.csv");
+        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena3.csv");
     }
 
-    public void ordena1(int v[], int tam) {
+    public static void ordena1(int v[], int tam, int comparaciones, int asignaciones) {
         int i, j, temp;
         i = 1;
         j = 2;
@@ -114,7 +152,7 @@ public class AdaEntrega1 {
         return m;
     }
 
-    static void aleatorio(int v[], int tam,Random random) {
+    static void aleatorio(int v[], int tam, Random random) {
         int i;
         for (i = 0; i < tam; i++) {
             v[i] = i;
@@ -128,15 +166,10 @@ public class AdaEntrega1 {
             v[j] = temp;
         }
     }
-    
 
+    public static void generarCSV( int[] comparaciones, int[] asignaciones, long[] tiempo, String nombreArchivo) {
 
-
-    public static void generarCSV(int[] tamanio, int[] comparaciones, int[] asignaciones, long[] tiempo) {
-        
-
-
-        String archivoCSV = "datos.csv"; // Nombre del archivo de salida
+        String archivoCSV = nombreArchivo; // Nombre del archivo de salida
 
         try (FileWriter escritor = new FileWriter(archivoCSV)) {
             // Escribimos la cabecera del archivo CSV
@@ -144,7 +177,7 @@ public class AdaEntrega1 {
 
             // Escribimos los datos en el archivo CSV
             for (int i = 0; i < 10; i++) {
-                escritor.append(tamanio[i] + ";" + comparaciones[i] + ";" + asignaciones[i] + ";" + tiempo[i] + "\n");
+                escritor.append(10000 * (i+1) + ";" + comparaciones[i] + ";" + asignaciones[i] + ";" + tiempo[i] + "\n");
             }
 
             System.out.println("Archivo CSV generado con éxito.");
@@ -153,5 +186,4 @@ public class AdaEntrega1 {
             e.printStackTrace();
         }
     }
-
 }
