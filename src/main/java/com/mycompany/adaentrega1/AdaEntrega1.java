@@ -53,10 +53,25 @@ public class AdaEntrega1 {
             
             //segunda funcion ---
             
-            
+            Instant start = Instant.now();
+            comparaciones=0;
+            asignaciones=0;
+            ordena2(v2, 10000 * (contador + 1), comparaciones, asignaciones);
+            Instant finish = Instant.now();
+            asignaciones2[contador]=asignaciones;
+            comparaciones2[contador]=comparaciones;
+            tiempo2[contador] = Duration.between(start, finish).toNanos();
             //---
             
             // tercera funcion ---
+            Instant start = Instant.now();
+            comparaciones=0;
+            asignaciones=0;
+            ordena3(v3, 10000 * (contador + 1), comparaciones, asignaciones);
+            Instant finish = Instant.now();
+            asignaciones3[contador]=asignaciones;
+            comparaciones3[contador]=comparaciones;
+            tiempo3[contador] = Duration.between(start, finish).toNanos();
             
             //------
             
@@ -65,8 +80,8 @@ public class AdaEntrega1 {
         }
         
         generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1.csv");
-        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena2.csv");
-        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena3.csv");
+        generarCSV( comparaciones2, asignaciones2, tiempo2, "ordena2.csv");
+        generarCSV( comparaciones3, asignaciones1, tiempo3, "ordena3.csv");
     }
 
     public static void ordena1(int v[], int tam, int comparaciones, int asignaciones) {
@@ -75,78 +90,89 @@ public class AdaEntrega1 {
         j = 2;
         while (i < tam) {
             if (v[i - 1] <= v[i]) {
-                i = j;
+                i = j; 
                 j = j + 1;
             } else {
                 temp = v[i - 1];
-                v[i - 1] = v[i];
+                v[i - 1] = v[i]; asignaciones +=2; //asignaciones al vector
                 v[i] = temp;
                 i = i - 1;
                 if (i == 0) {
                     i = 1;
                 }
+             
             }
+         comparaciones++;//comparacion if else
+       
         }
+
     }
 
-    public void ordena2(int[] v, int tam) {
+    public void ordena2(int[] v, int tam,int comparaciones, int asignaciones) {
         int k;
         int n = tam;
         for (k = n / 2; k >= 1; k--) {
-            f(v, k, n);
+            f(v, k, n,comparaciones, asignaciones);
         }
         k = n;
         while (k > 1) {
             g(v, 1, k--);
-            f(v, 1, k);
+            f(v, 1, k,comparaciones,asignaciones);
         }
     }
 
-    private void f(int[] v, int k, int n) {
+    private void f(int[] v, int k, int n, int comparaciones, int asignaciones) {
         while (2 * k <= n) {
             int j = 2 * k;
-            if ((j < n) && (v[j - 1] < v[j])) {
+            //separar en dos ifs
+            if (j < n)
+            	if(v[j - 1] < v[j]) {
                 j++;
+            	}
+            	comparaciones++;
             }
+        	comparaciones++;
             if (v[k - 1] >= v[j - 1]) {
                 break;
             }
-            g(v, k, j);
+            g(v, k, j,comparaciones,asignaciones);
             k = j;
         }
     }
 
-    private void g(int[] v, int i, int j) {
-        int temp = v[i - 1];
+    private void g(int[] v, int i, int j, int comparaciones, int asignaciones) {
+        int temp = v[i - 1]; 
         v[i - 1] = v[j - 1];
         v[j - 1] = temp;
+        asignaciones +=3;
     }
 
-    public void ordena3(int[] v, int tam) {
+    public void ordena3(int[] v, int tam,int comparaciones, int asignaciones) {
         int m = h(v, tam);
         int[] c = new int[m + 1];
         int[] w = new int[tam];
         for (int i = 0; i < tam; i++) {
-            c[v[i]] = c[v[i]] + 1;
+            c[v[i]] = c[v[i]] + 1; asignaciones++;
         }
         for (int i = 1; i < m + 1; i++) {
-            c[i] = c[i] + c[i - 1];
+            c[i] = c[i] + c[i - 1]; asignaciones++;
         }
         for (int i = tam - 1; i >= 0; i--) {
-            w[c[v[i]] - 1] = v[i];
+            w[c[v[i]] - 1] = v[i]; asignaciones+=2;
             c[v[i]] = c[v[i]] - 1;
         }
         for (int i = 0; i < tam; i++) {
-            v[i] = w[i];
+            v[i] = w[i]; asignaciones++;
         }
     }
 
-    private int h(int[] v, int tam) {
+    private int h(int[] v, int tam,int comparaciones int asignaciones) {
         int i;
-        int m = v[0];
+        int m = v[0]; asignaciones++;
         for (i = 1; i < tam; i++) {
+        	comparaciones++;
             if (v[i] > m) {
-                m = v[i];
+                m = v[i]; asignaciones++;
             }
         }
         return m;
