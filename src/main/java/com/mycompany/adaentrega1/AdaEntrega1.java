@@ -39,6 +39,9 @@ public class AdaEntrega1 {
         long tiempo2[] = new long[10];
         long tiempo3[] = new long[10];
         
+        for(int i=0;i<10;i++){
+            
+         
         for (contador = 0; 10 > contador; contador++) {
             int tamanio =(contador + 1) * 10000;
             v = new int[tamanio];
@@ -51,7 +54,6 @@ public class AdaEntrega1 {
             v2 = v.clone();
             v3 = v.clone();
 
-           
             //primera funcion 
             Instant start = Instant.now();
             ordena1(v1, 10000 * (contador + 1));
@@ -90,9 +92,11 @@ public class AdaEntrega1 {
             
         }
         
-        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1.csv");
-        generarCSV( comparaciones2, asignaciones2, tiempo2, "ordena2.csv");
-        generarCSV( comparaciones3, asignaciones3, tiempo3, "ordena3.csv");
+        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1"+ i +".csv");
+        generarCSV( comparaciones2, asignaciones2, tiempo2, "ordena2"+ i +".csv");
+        generarCSV( comparaciones3, asignaciones3, tiempo3, "ordena3"+ i +".csv");
+        }
+        
     }
 
     public static void ordena1(int v[], int tam) {
