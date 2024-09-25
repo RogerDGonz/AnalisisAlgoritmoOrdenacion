@@ -39,7 +39,7 @@ public class AdaEntrega1 {
         long tiempo2[] = new long[10];
         long tiempo3[] = new long[10];
         
-        for(int i=0;i<10;i++){
+        for(int i=0;i<1;i++){
             
          
         for (contador = 0; 10 > contador; contador++) {
@@ -53,7 +53,7 @@ public class AdaEntrega1 {
             v1 = v.clone();
             v2 = v.clone();
             v3 = v.clone();
-
+/*
             //primera funcion 
             Instant start = Instant.now();
             ordena1(v1, 10000 * (contador + 1));
@@ -75,13 +75,13 @@ public class AdaEntrega1 {
             comparaciones2[contador]=comparaciones;
             tiempo2[contador] = Duration.between(start, finish).toNanos();
             //---
-            
+  */          
             // tercera funcion ---
-             start = Instant.now();
+            Instant start = Instant.now();
             comparaciones=0;
             asignaciones=0;
             ordena3(v3, 10000 * (contador + 1));
-             finish = Instant.now();
+            Instant finish = Instant.now();
             asignaciones3[contador]=asignaciones;
             comparaciones3[contador]=comparaciones;
             tiempo3[contador] = Duration.between(start, finish).toNanos();
@@ -92,8 +92,8 @@ public class AdaEntrega1 {
             
         }
         
-        generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1"+ i +".csv");
-        generarCSV( comparaciones2, asignaciones2, tiempo2, "ordena2"+ i +".csv");
+        //generarCSV( comparaciones1, asignaciones1, tiempo1, "ordena1"+ i +".csv");
+        //generarCSV( comparaciones2, asignaciones2, tiempo2, "ordena2"+ i +".csv");
         generarCSV( comparaciones3, asignaciones3, tiempo3, "ordena3"+ i +".csv");
         }
         
@@ -110,7 +110,7 @@ public class AdaEntrega1 {
             } else {
                 temp = v[i - 1];
                 v[i - 1] = v[i]; 
-                asignaciones +=2; //asignaciones al vector
+                asignaciones +=3; //asignaciones al vector
                 v[i] = temp;
                 i = i - 1;
                 if (i == 0) {
@@ -171,7 +171,7 @@ public class AdaEntrega1 {
             c[v[i]] = c[v[i]] + 1; asignaciones++;
         }
         for (int i = 1; i < m + 1; i++) {
-            c[i] = c[i] + c[i - 1]; asignaciones++;
+            c[i] = c[i] + c[i - 1];// asignaciones++;
         }
         for (int i = tam - 1; i >= 0; i--) {
             w[c[v[i]] - 1] = v[i]; asignaciones+=2;
